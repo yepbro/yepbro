@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог VPS</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Сравнение тарифов VPS из публичного снимка. Цены не перепроверялись.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#catalog">К таблице</a>
+  <div class="wrap">
+    <header class="page-head">
+      <h1>Каталог VPS</h1>
+      <p class="lead">Сравнение тарифов из публичного снимка. Цифры ниже не перепроверялись.</p>
+      <p class="source">Источник: публичный файл на Яндекс.Диске, лист «vds», 3038 строк. В свойствах книги указано изменение 10 марта 2026 года. Это сохранённый снимок: цены и характеристики не проверялись заново и могут отличаться от сайтов провайдеров. <a href="https://disk.yandex.ru/i/y1pidZ0n-ur9_Q">https://disk.yandex.ru/i/y1pidZ0n-ur9_Q</a></p>
+    </header>
+
+    <form id="filters" class="filters" autocomplete="off">
+      <label class="search">
+        <span>Поиск по провайдеру, тарифу, сайту или локации</span>
+        <input id="search" name="search" type="search" autocomplete="off">
+      </label>
+
+      <fieldset>
+        <legend>Цена, ₽</legend>
+        <div class="range">
+          <label>от <input name="price_rub_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="price_rub_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>RAM, ГБ</legend>
+        <div class="range">
+          <label>от <input name="ram_gb_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="ram_gb_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+        <label class="check"><input name="ram_unknown" type="checkbox"> Неизвестно</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>CPU, шт.</legend>
+        <div class="range">
+          <label>от <input name="cpu_count_from" type="number" inputmode="numeric" min="0" step="1"></label>
+          <label>до <input name="cpu_count_to" type="number" inputmode="numeric" min="0" step="1"></label>
+        </div>
+        <div class="checks scroll" id="cpu-count-choices"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Частота, МГц</legend>
+        <div class="range">
+          <label>от <input name="cpu_freq_mhz_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="cpu_freq_mhz_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+        <div class="checks scroll" id="cpu-freq-choices"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Диск, ГБ</legend>
+        <div class="range">
+          <label>от <input name="disk_size_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="disk_size_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Трафик, ТБ</legend>
+        <div class="range">
+          <label>от <input name="traffic_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="traffic_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+        <label class="check"><input name="traffic_unlimited" type="checkbox"> Безлимит (∞)</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Скорость, Мбит/с</legend>
+        <div class="range">
+          <label>от <input name="speed_from" type="number" inputmode="decimal" min="0" step="any"></label>
+          <label>до <input name="speed_to" type="number" inputmode="decimal" min="0" step="any"></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Тип диска</legend>
+        <div class="checks">
+          <label class="check"><input name="disk_type" type="checkbox" value="NVMe"> NVMe</label>
+          <label class="check"><input name="disk_type" type="checkbox" value="SSD"> SSD</label>
+          <label class="check"><input name="disk_type" type="checkbox" value="HDD"> HDD</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Виртуализация</legend>
+        <div class="checks">
+          <label class="check"><input name="virtualization" type="checkbox" value="KVM"> KVM</label>
+          <label class="check"><input name="virtualization" type="checkbox" value="VMware"> VMware</label>
+          <label class="check"><input name="virtualization" type="checkbox" value="OpenVZ"> OpenVZ</label>
+          <label class="check"><input name="virtualization" type="checkbox" value="XEN"> XEN</label>
+          <label class="check"><input name="virtualization" type="checkbox" value="Hyper-V"> Hyper-V</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>IPv6</legend>
+        <div class="checks">
+          <label class="check"><input name="ipv6" type="checkbox" value="да"> да</label>
+          <label class="check"><input name="ipv6" type="checkbox" value="нет"> нет</label>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="toolbar">
+      <p id="count" role="status" aria-live="polite">Загрузка…</p>
+      <button id="reset" type="button">Сбросить</button>
+    </div>
+
+    <div id="catalog" class="table-scroll" tabindex="0" aria-label="Таблица тарифов">
+      <table>
+        <caption class="visually-hidden">Тарифы VPS из публичного снимка</caption>
+        <thead>
+          <tr>
+            <th class="plain" scope="col">Провайдер</th>
+            <th class="plain" scope="col">Сайт</th>
+            <th class="plain" scope="col">Возраст, дни</th>
+            <th class="plain" scope="col">Тариф</th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="price_rub">Цена, ₽</button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="ram_gb">RAM, ГБ</button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="cpu_count">CPU, шт.</button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="cpu_freq_mhz">Частота, МГц</button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="disk_size">Диск</button></th>
+            <th class="plain" scope="col">Тип диска</th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="traffic">Трафик</button></th>
+            <th scope="col" aria-sort="none"><button type="button" class="sort" data-sort="speed">Скорость</button></th>
+            <th class="plain" scope="col">Локация</th>
+            <th class="plain" scope="col">Виртуализация</th>
+            <th class="plain" scope="col">IPv6</th>
+            <th class="plain" scope="col">Оплата</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
