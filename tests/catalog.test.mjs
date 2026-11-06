@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -172,6 +173,33 @@ test("unknown RAM sorts last in both directions and equal prices stay stable", (
   assert.deepEqual(sortOffers(rows, "ram_gb", "desc").map((row) => row.source_row), [4, 2, 3]);
   assert.deepEqual(sortOffers(rows, "price_rub", "asc").map((row) => row.source_row), [4, 2, 3]);
   assert.deepEqual(sortOffers(rows, null, "asc").map((row) => row.source_row), [2, 3, 4]);
+});
+
+test("the saved snapshot sorts infinity and combines filters", () => {
+  const data = JSON.parse(readFileSync(new URL("../vps/data.json", import.meta.url), "utf8"));
+  assert.equal(data.offers.length, 3038);
+
+  const state = defaultState();
+  state.ram_gb.unknown = true;
+  state.disk_type = ["HDD"];
+  const damagedHdd = filterOffers(data.offers, state);
+  assert.ok(damagedHdd.length > 0);
+  assert.ok(damagedHdd.every((row) => row.ram_unknown && row.disk_type === "HDD" && row.ram_gb === null));
+
+  const descending = sortOffers(data.offers, "traffic", "desc");
+  assert.ok(descending.slice(0, 1803).every((row) => row.traffic_unlimited));
+  assert.ok(descending.slice(1803).every((row) => !row.traffic_unlimited));
+  const finite = descending.slice(1803).map((row) => row.traffic_tb);
+  for (let index = 1; index < finite.length; index += 1) {
+    assert.ok(finite[index] <= finite[index - 1]);
+  }
+
+  const labels = ["10 ТБ", "2 ТБ"];
+  const present = data.offers.filter((row) => labels.includes(row.traffic_raw));
+  const ordered = sortOffers(present, "traffic", "asc").map((row) => row.traffic_raw);
+  assert.equal(ordered[0], "2 ТБ");
+  assert.equal(ordered.at(-1), "10 ТБ");
+  assert.notDeepEqual(labels.slice().sort(), ["2 ТБ", "10 ТБ"]);
 });
 
 test("provider links are https hostnames only", () => {
