@@ -1,5 +1,7 @@
 # Hi, I'm Den 👋
 
+<img src="assets/gaika.jpg" align="right" width="260" alt="Моя пушистая любимица" title="Моя пушистая любимица">
+
 I love reading, solving logic puzzles and warm sunny days. Best time off: hugging my wife and playing soccer with my son.
 
 ## What I'm working on
