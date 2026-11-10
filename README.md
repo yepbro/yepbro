@@ -6,8 +6,8 @@ I love reading, solving logic puzzles and warm sunny days. Best time off: huggin
 
 ## What I'm working on
 
-- [quotameter](https://github.com/yepbro/quotameter) — self-hosted web service that monitors usage quotas for AI subscriptions
-- [laravel-domains](https://github.com/yepbro/laravel-domains) — scans the full worldwide domain list to find sites built with Laravel
+- [QuotaMeter](https://github.com/yepbro/quotameter) — self-hosted web service that monitors usage quotas for AI subscriptions
+- [Laravel Domains](https://sites.laravel.city) — scans the full worldwide domain list to find sites built with Laravel
 
 ## Stack
 
