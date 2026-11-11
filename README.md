@@ -9,6 +9,10 @@ I love reading, solving logic puzzles and warm sunny days. Best time off: huggin
 - [QuotaMeter](https://github.com/yepbro/quotameter) — self-hosted web service that monitors usage quotas for AI subscriptions
 - [Laravel Domains](https://sites.laravel.city) — scans the full worldwide domain list to find sites built with Laravel
 
+## Open source I contribute to
+
+- [Moli](https://github.com/lexmount/moli) — best headless browser for AI agents. Lite, fast, high-compatibility, built in Rust
+
 ## Stack
 
 PHP · Laravel · Livewire · Inertia · Vue · React · JS/TS · Rust · Go · Python
