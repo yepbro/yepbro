@@ -12,7 +12,7 @@ I love reading, solving logic puzzles and warm sunny days. Best time off: huggin
 
 ## Pet projects
 
-- [Opencode Project Time] — Read-only reports of how much time OpenCode agents spent on a project (plugin, skill, scripts)
+- [Opencode Project Time](https://github.com/yepbro/opencode-project-time) — Read-only reports of how much time OpenCode agents spent on a project (plugin, skill, scripts)
 
 ## Open source I contribute to
 
