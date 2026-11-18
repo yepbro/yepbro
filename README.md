@@ -6,8 +6,13 @@ I love reading, solving logic puzzles and warm sunny days. Best time off: huggin
 
 ## What I'm working on
 
+- [EunomiaSync](https://github.com/yepbro/EunomiaSync) — cross-platform Rust desktop app (Windows, macOS, Linux) to keep AGENTS.md files accurate and up to date across multiple projects
 - [QuotaMeter](https://github.com/yepbro/quotameter) — self-hosted web service that monitors usage quotas for AI subscriptions
 - [Laravel Domains](https://sites.laravel.city) — scans the full worldwide domain list to find sites built with Laravel
+
+## Pet projects
+
+- [Opencode Project Time] — Read-only reports of how much time OpenCode agents spent on a project (plugin, skill, scripts)
 
 ## Open source I contribute to
 
